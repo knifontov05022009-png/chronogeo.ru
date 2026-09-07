@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ChronoGeo - о проекте</title>
+
+<style>
+
+  :root {
+    --green: #1D9E75;
+    --blue: #378ADD;
+    --red: #D64545;
+    --white: #FFFFFF;
+    --hover: #e4f3ee;
+    --bg: #F1EFE8;
+    --text: #2A2A2A;
+    --text-muted: #5e5757;
+    --border: #D8D4C8;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Manrope', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 24px;
+  }
+
+  .logo {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 12px;
+  }
+
+  .logo .chrono {
+    color: var(--green);
+  }
+
+  .logo .geo {
+    color: var(--blue);
+  }
+
+  .subtitle {
+    max-width: 520px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 28px;
+  }
+
+  nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 10px 22px;
+    border: 2px solid var(--green);
+    border-radius: 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  nav a:hover {
+    background: var(--hover);
+  }
+
+  nav a.active {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .project {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .project-box {
+    background: var(--white);
+    border: 2px solid var(--green);
+    border-radius: 40px;
+    padding: 32px;
+  }
+
+  .project-box p {
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.7;
+    margin: 0 0 20px;
+  }
+
+  .project-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <span class="chrono">Chrono</span><span class="geo">Geo</span>
+  </div>
+
+  <p class="subtitle">
+    Карта жизненных путей известных людей - места рождения и смерти на одной карте.
+  </p>
+
+  <nav>
+    <a href="index.html">Карта</a>
+    <a href="about.html" class="active">О проекте</a>
+  </nav>
+
+</header>
+
+<main class="project">
+
+  <section class="project-box">
+
+<p>
+  ChronoGeo - карта, на которой показаны места рождения и смерти известных людей.
+</p>
+
+<p>
+  В проекте 30 человек из пяти категорий: писатели, учёные, правители,
+  художники и музыканты, а также другие известные личности.
+  Для каждого на карте отмечено два места — где он родился и где умер.
+</p>
+
+<p>
+  Данные взяты из Большой российской энциклопедии.
+</p>
+
+<p>
+  Карта сделана с использованием MapLibre и OpenFreeMap, сайт - на HTML, CSS и JavaScript.
+</p>
+
+  </section>
+
+</main>
+
+<footer>
+  chronogeo.ru
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css">
+
+<title>ChronoGeo - карта жизненных путей известных людей</title>
+
+<style>
+
+  :root {
+    --green: #1D9E75;
+    --blue: #378ADD;
+    --red: #D64545;
+    --white: #FFFFFF;
+    --hover: #e4f3ee;
+    --bg: #F1EFE8;
+    --text: #2A2A2A;
+    --text-muted: #5e5757;
+    --border: #D8D4C8;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Manrope', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 24px;
+  }
+
+  .logo {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 12px;
+  }
+
+  .logo .chrono {
+    color: var(--green);
+  }
+
+  .logo .geo {
+    color: var(--blue);
+  }
+
+  .subtitle {
+    max-width: 520px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 28px;
+  }
+
+  nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 10px 22px;
+    border: 2px solid var(--green);
+    border-radius: 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  nav a:hover {
+    background: var(--hover);
+  }
+
+  nav a.active {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 800px) {
+    main {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .categories {
+    border: 2px solid var(--green);
+    border-radius: 20px;
+    padding: 24px;
+    background: var(--white);
+    height: fit-content;
+  }
+
+  .categories h2 {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 18px;
+    margin: 0 0 16px;
+  }
+
+  .categories ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .categories li {
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border: 2px solid var(--green);
+    border-radius: 24px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .categories li:hover {
+    background: var(--hover);
+    border-color: var(--green);
+  }
+
+  .categories li.active {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .categories li:last-child {
+    margin-bottom: 0;
+  }
+
+  .legend {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .legend h2 {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 18px;
+    margin: 0 0 14px;
+  }
+
+  .legend p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 9px 0;
+    font-size: 14px;
+  }
+
+  .legend-point {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .legend-point.birth {
+    background: var(--blue);
+  }
+
+  .legend-point.death {
+    background: var(--red);
+  }
+
+  .legend-line {
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .map-wrap {
+    width: 100%;
+    height: 600px;
+    border: 5px solid var(--green);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <span class="chrono">Chrono</span><span class="geo">Geo</span>
+  </div>
+
+  <p class="subtitle">
+    Карта жизненных путей известных людей - места рождения и смерти на одной карте.
+  </p>
+
+  <nav>
+    <a href="index.html" class="active">Карта</a>
+    <a href="about.html">О проекте</a>
+  </nav>
+
+</header>
+
+<main>
+
+  <aside class="categories">
+
+
+<h2>Категории</h2>
+
+<ul>
+  <li data-category="writers">Писатели</li>
+  <li data-category="scientists">Учёные</li>
+  <li data-category="rulers">Правители</li>
+  <li data-category="artists">Художники / музыканты</li>
+  <li data-category="other">Прочие известные личности</li>
+</ul>
+
+<div class="legend">
+
+  <h2>Обозначения</h2>
+
+  <p>
+    <span class="legend-point birth"></span>
+    Рождение
+  </p>
+
+  <p>
+    <span class="legend-point death"></span>
+    Смерть
+  </p>
+
+  <p>
+    <span class="legend-line"></span>
+    Жизненный путь
+  </p>
+
+</div>
+
+  </aside>
+
+  <section class="map-wrap">
+    <div id="map"></div>
+  </section>
+
+</main>
+
+<footer>
+  chronogeo.ru
+</footer>
+
+<script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
+
+<script>
+
+const map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://tiles.openfreemap.org/styles/liberty',
+    center: [37.6173, 55.7558],
+    zoom: 5
+});
+
+map.addControl(new maplibregl.NavigationControl());
+
+map.on('load', () => {
+
+    map.getStyle().layers.forEach(layer => {
+
+        const name = (
+            layer.id + ' ' + (layer['source-layer'] || '')
+        ).toLowerCase();
+
+        if (
+            name.includes('boundary') ||
+            name.includes('border') ||
+            name.includes('admin')
+        ) {
+            map.setLayoutProperty(
+                layer.id,
+                'visibility',
+                'none'
+            );
+        }
+
+    });
+
+});
+
+</script>
+
+<script src="Mega_script.js"></script>
+
+</body>
+
+</html>
